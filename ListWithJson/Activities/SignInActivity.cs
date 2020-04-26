@@ -9,12 +9,18 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using ListWithJson.Models;
+using ListWithJson.Utils;
 
 namespace ListWithJson.Activities
 {
-    [Activity(Label = "SignInActivity")]
+    [Activity(Label = "SignInActivity", NoHistory = true, ExcludeFromRecents = true)]
     public class SignInActivity : Activity
     {
+        EditText editTextEmail;
+        EditText editTextPassword;
+        RestService _restServiceSignIn;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -22,34 +28,39 @@ namespace ListWithJson.Activities
             // Create your application here
             SetContentView(Resource.Layout.activity_signin);
 
-            var editTextEmail = FindViewById<EditText>(Resource.Id.editTextEmailSignIn);
-            var editTextPassword = FindViewById<EditText>(Resource.Id.editTextPasswordSignIn);
+            _restServiceSignIn = new RestService();
+
             var buttonSignIn = FindViewById<Button>(Resource.Id.buttonSignIn);
             var buttonToCreateAccount = FindViewById<Button>(Resource.Id.buttonToCreateAccount);
+            editTextEmail = FindViewById<EditText>(Resource.Id.editTextEmailSignIn);
+            editTextPassword = FindViewById<EditText>(Resource.Id.editTextPasswordSignIn);
 
             buttonSignIn.Click += ButtonSignIn_Click;
-        }
-
-        private void ButtonSignIn_Click(object sender, EventArgs e)
-        {
-            if (ValidateUserCredentials())
+            buttonToCreateAccount.Click += (s, e) =>
             {
+                var intent = new Intent(this, typeof(CreateAccountActivity));
+                StartActivity(intent);
+            };
+        }
 
+        private async void ButtonSignIn_Click(object sender, EventArgs e)
+        {
+            string email = editTextEmail.Text;
+            string password = editTextPassword.Text;
+
+            User user = await _restServiceSignIn.SignIn(email, password);
+
+            if (user != null)
+            {
+                AppPreferenceUser.SetUser(user);
+                var intent = new Intent(this, typeof(MainActivity));
+                StartActivity(intent);
+                Finish();
             }
-        }
-
-        private bool ValidateUserCredentials()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void OnBackPressed()
-        {
-            base.OnBackPressed();
-            // Minimize app of finish?
-            //Intent main = new Intent(Intent.ActionMain);
-            //main.AddCategory(Intent.CategoryHome);
-            //StartActivity(main);
+            else
+            {
+                Toast.MakeText(this, "Incorrect email or password", ToastLength.Long).Show();
+            }
         }
     }
 }

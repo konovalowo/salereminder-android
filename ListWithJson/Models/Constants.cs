@@ -15,6 +15,7 @@ namespace ListWithJson
     public static class Constants
     {
         public static string BaseAdress = "https://10.0.2.2:5001";
-        public static string ProductApiUrl = BaseAdress + "/api/Products/{0}";
+        public static string ApiProductsUrl = BaseAdress + "/api/Products/{0}";
+        public static string ApiSignInUrl = BaseAdress + "/authentication";
     }
 }

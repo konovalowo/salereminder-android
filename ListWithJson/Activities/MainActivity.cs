@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 
 using ListWithJson.Activities;
 using ListWithJson.Models;
+using ListWithJson.Utils;
 
 namespace ListWithJson
 {
@@ -28,7 +29,6 @@ namespace ListWithJson
 
         List<Product> products;
         ProductAdapter productAdapter;
-        RecyclerView productRecyclerView;
 
         protected override async void OnCreate(Bundle savedInstanceState)
         {
@@ -39,10 +39,15 @@ namespace ListWithJson
 
             // Sign in
             // Check is signed in
-            if (_user == null)
+            if (AppPreferenceUser.isLogged)
+            {
+                _user = AppPreferenceUser.GetUser();
+            }
+            else
             {
                 var intent = new Intent(this, typeof(SignInActivity));
-                StartActivityForResult(intent, 1);
+                StartActivity(intent);
+                Finish();
             }
 
             _restService = new RestService();
@@ -50,7 +55,7 @@ namespace ListWithJson
             // Toolbar
             var toolbar = FindViewById<Android.Widget.Toolbar>(Resource.Id.toolbar);
             SetActionBar(toolbar);
-            ActionBar.Title = "actionbar";
+            ActionBar.Title = Resources.GetString(Resource.String.app_name);
 
             // Fab
             var fab = FindViewById<FloatingActionButton>(Resource.Id.fabAdd);
@@ -110,10 +115,6 @@ namespace ListWithJson
                         await RefreshProductListPage();
                     }
                 }
-            }
-            else if (requestCode == 1)
-            {
-                // Sign In handler
             }
         }
 

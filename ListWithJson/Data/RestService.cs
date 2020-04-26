@@ -32,10 +32,40 @@ namespace ListWithJson
             _user = user;
         }
 
+        public async Task<User> SignIn(string email, string password)
+        {
+            return null;
+            var uri = new Uri(string.Format(Constants.ApiSignInUrl, ""));
+            User user = new User { Email = email, Password = password };
+            var json = JsonConvert.SerializeObject(user);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            try
+            {
+                var response = await _client.PostAsync(uri, content);
+                if (response.IsSuccessStatusCode)
+                {
+                    Log.Debug("RestService", "Succesfully signed in.");
+                    string contentString = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<User>(contentString);
+                }
+                else
+                {
+                    Log.Error("RestService", $"Failed to sign in {response.StatusCode}: {response.ReasonPhrase}");
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Log.Error("RestService", e.Message);
+                return null;
+            }
+        }
+
         public async Task<List<Product>> Get()
         {
             var products = new List<Product>();
-            var uri = new Uri(string.Format(Constants.ProductApiUrl, ""));
+            var uri = new Uri(string.Format(Constants.ApiProductsUrl, ""));
 
             try
             {
@@ -60,7 +90,7 @@ namespace ListWithJson
 
         public async Task<Product> Post(Product product)
         {
-            var uri = new Uri(string.Format(Constants.ProductApiUrl, string.Empty));
+            var uri = new Uri(string.Format(Constants.ApiProductsUrl, string.Empty));
 
             var json = JsonConvert.SerializeObject(product);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -89,7 +119,7 @@ namespace ListWithJson
 
         public async Task Delete(int id)
         {
-            var uri = new Uri(string.Format(Constants.ProductApiUrl, id.ToString()));
+            var uri = new Uri(string.Format(Constants.ApiProductsUrl, id.ToString()));
             
             try
             {

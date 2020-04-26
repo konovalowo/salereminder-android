@@ -31,7 +31,7 @@ namespace ListWithJson
 
             var toolbar = FindViewById<Android.Widget.Toolbar>(Resource.Id.toolbar);
             SetActionBar(toolbar);
-            ActionBar.Title = "actionbar";
+            ActionBar.Title = Resources.GetString(Resource.String.app_name);
 
             string productJson = Intent.GetStringExtra("product");
             product = JsonConvert.DeserializeObject<Product>(productJson);
