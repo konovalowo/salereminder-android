@@ -1,0 +1,97 @@
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/abc_action_bar_default_height_material"
+>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:src="@android:drawable/ic_menu_gallery"
+                android:layout_width="match_parent"
+                android:layout_height="392.0dp"
+                android:minWidth="25px"
+                android:minHeight="25px"
+                android:scaleType="centerCrop"
+                android:id="@+id/productImageView" />
+            <TextView
+                android:text="Brand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/brandTextView"
+                android:layout_marginTop="10dp"
+                android:textStyle="bold"
+                android:paddingLeft="@dimen/abc_dropdownitem_text_padding_left"
+                android:textColor="@android:color/black"
+                android:textSize="30dp" />
+            <TextView
+                android:text="Name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/nameTextView"
+                android:layout_marginBottom="0.0dp"
+                android:layout_marginTop="5dp"
+                android:paddingLeft="@dimen/abc_dropdownitem_text_padding_left"
+                android:textColor="@android:color/black"
+                android:textSize="20dp" />
+            <TextView
+                android:text="Price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/priceTextView"
+                android:layout_marginBottom="0.0dp"
+                android:layout_marginTop="5dp"
+                android:textStyle="bold"
+                android:paddingLeft="@dimen/abc_dropdownitem_text_padding_left"
+                android:paddingTop="-10dp"
+                android:textColor="@android:color/black"
+                android:textSize="30dp"/>
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_centerHorizontal="true"
+                android:background="#E0E0E0"/>
+            <TextView
+                android:text="Description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="@android:color/black"
+                android:paddingLeft="@dimen/abc_dropdownitem_text_padding_left"
+                android:id="@+id/descTextView"
+                android:textSize="20dp" />
+            <Button
+                android:text="Go to product page"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_margin="10dp"
+                android:shadowColor="@android:color/black"
+                android:textColor="@android:color/white"
+                android:background="?android:attr/colorAccent"
+                android:id="@+id/buttonOpenUrl"/>
+            <Button
+                android:text="Delete product"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_margin="10dp"
+                android:shadowColor="@android:color/black"
+                android:textColor="@android:color/white"
+                android:background="?android:attr/colorAccent"
+                android:id="@+id/buttonDelete"/>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
