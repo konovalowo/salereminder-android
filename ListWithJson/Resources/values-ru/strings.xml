@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">SaleReminder</string>
+  <string name="action_settings">Настройки</string>
+  <string name="sign_in">Войти</string>
+  <string name="create_new">Создать аккаунт</string>
+  <string name="password">Пароль</string>
+  <string name="password_confirmation">Подтверждение пароля</string>
+  <string name="email">Эл. Почта</string>
+  <string name="incorrect_pass_or_email">Неверная эл. почта или пароль</string>
+  <string name="invalid_email_format">Неверный формат эл. почты</string>
+  <string name="passwords_dont_match">Пароли не совпадают</string>
+  <string name="password_tooshort">Пароль должен содержать минимум 8 символов</string>
+  <string name="product_page_link">Перейти на страницу товара</string>
+  <string name="delete_product">Удалить товар</string>
+</resources>

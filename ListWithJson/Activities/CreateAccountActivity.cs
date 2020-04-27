@@ -10,33 +10,78 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 
+using ListWithJson.Models;
+using ListWithJson.Utils;
+
 namespace ListWithJson.Activities
 {
     [Activity(Label = "CreateAccountActivity")]
     public class CreateAccountActivity : Activity
     {
+        EditText editTextEmail;
+        EditText editTextPassword;
+        EditText editTextConfirmPassword;
+        RestService _restServiceRegister;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
-            // Create your application here
+            SetContentView(Resource.Layout.activity_create_account);
+
+            _restServiceRegister = new RestService();
+
+            var buttonCreateAccount = FindViewById<Button>(Resource.Id.buttonCreateAccount);
+            editTextEmail = FindViewById<EditText>(Resource.Id.editTextEmailCreateAccount);
+            editTextPassword = FindViewById<EditText>(Resource.Id.editTextPasswordCreateAccount);
+            editTextConfirmPassword = FindViewById<EditText>(Resource.Id.editTextConfirmPasswordCreateAccount);
+
+            buttonCreateAccount.Click += ButtonCreateAccount_Click;
         }
 
-        // Lmao thats for create account
-        private bool ValidateEmail(string email)
+        private async void ButtonCreateAccount_Click(object sender, EventArgs e)
         {
-            if (email.Contains('@'))
+            string email = editTextEmail.Text;
+            string password = editTextPassword.Text;
+
+            if (!isValidEmail(email))
             {
-                string[] emailSplit = email.Split('@');
+                Toast.MakeText(this, Resource.String.invalid_email_format, ToastLength.Long).Show();
+                return;
+            }
+            if (password.Length < 8)
+            {
+                Toast.MakeText(this, Resource.String.password_tooshort, ToastLength.Long).Show();
+                return;
+            }
+            if (password != editTextConfirmPassword.Text)
+            {
+                Toast.MakeText(this, Resource.String.passwords_dont_match, ToastLength.Long).Show();
+                return;
+            }
+
+            User user = await _restServiceRegister.Authenticate(new User { Email = email, Password = password }, true);
+
+            if (user != null)
+            {
+                AppPreferenceUser.SetUser(user);
+                var intent = new Intent(this, typeof(MainActivity));
+                StartActivity(intent);
+                Finish();
             }
             else
             {
-                AlertDialog.Builder alert = new AlertDialog.Builder(this);
-                alert.SetMessage("Invalid email format");
-                Dialog dialog = alert.Create();
-                dialog.Show();
+                Toast.MakeText(this, Resource.String.incorrect_pass_or_email, ToastLength.Long).Show();
             }
-            return false;
+        }
+
+        private bool isValidEmail(string email) => (Android.Util.Patterns.EmailAddress.Matcher(email).Matches());
+
+        public override void OnBackPressed()
+        {
+            base.OnBackPressed();
+            var intent = new Intent(this, typeof(SignInActivity));
+            StartActivity(intent);
         }
     }
 }

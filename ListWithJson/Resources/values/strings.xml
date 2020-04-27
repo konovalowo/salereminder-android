@@ -1,4 +1,15 @@
 <resources>
-    <string name="app_name">SaleReminder</string>
-    <string name="action_settings">Settings</string>
+  <string name="app_name">SaleReminder</string>
+  <string name="action_settings">Settings</string>
+  <string name="sign_in">Sign In</string>
+  <string name="create_new">Create Account</string>
+  <string name="password">Password</string>
+  <string name="password_confirmation">Confirm password</string>
+  <string name="email">Email</string>
+  <string name="incorrect_pass_or_email">Incorrect email or password</string>
+  <string name="invalid_email_format">Invalid email format</string>
+  <string name="passwords_dont_match">Passwords don't match</string>
+  <string name="password_tooshort">Password must contain at least 8 characters</string>
+  <string name="product_page_link">Go to product page</string>
+  <string name="delete_product">Delete product</string>
 </resources>

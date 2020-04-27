@@ -32,11 +32,9 @@ namespace ListWithJson
             _user = user;
         }
 
-        public async Task<User> SignIn(string email, string password)
+        public async Task<User> Register(User user)
         {
-            return null;
-            var uri = new Uri(string.Format(Constants.ApiSignInUrl, ""));
-            User user = new User { Email = email, Password = password };
+            var uri = new Uri(string.Format(Constants.ApiAuthenticationUrl, "create"));
             var json = JsonConvert.SerializeObject(user);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
@@ -45,13 +43,43 @@ namespace ListWithJson
                 var response = await _client.PostAsync(uri, content);
                 if (response.IsSuccessStatusCode)
                 {
-                    Log.Debug("RestService", "Succesfully signed in.");
+                    Log.Debug("RestService", "Succesfully created account.");
                     string contentString = await response.Content.ReadAsStringAsync();
                     return JsonConvert.DeserializeObject<User>(contentString);
                 }
                 else
                 {
-                    Log.Error("RestService", $"Failed to sign in {response.StatusCode}: {response.ReasonPhrase}");
+                    Log.Error("RestService", $"Failed to create account {response.StatusCode}: {response.ReasonPhrase}");
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Log.Error("RestService", e.Message);
+                return null;
+            }
+        }
+
+
+        public async Task<User> Authenticate(User user, bool isCreate)
+        {
+            var uri = new Uri(string.Format(Constants.ApiAuthenticationUrl, isCreate ? "create" : "signin"));
+            var json = JsonConvert.SerializeObject(user);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            try
+            {
+                var response = await _client.PostAsync(uri, content);
+                if (response.IsSuccessStatusCode)
+                {
+                    Log.Debug("RestService", "Succesfully authenticated. " + (isCreate ? "New account created." : ""));
+                    string contentString = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<User>(contentString);
+                }
+                else
+                {
+                    Log.Error("RestService", $"Authentication ({(isCreate ? "creating new account" : "signing in")}) failed" +
+                        $" {response.StatusCode}: {response.ReasonPhrase}");
                     return null;
                 }
             }

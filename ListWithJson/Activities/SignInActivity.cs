@@ -25,7 +25,6 @@ namespace ListWithJson.Activities
         {
             base.OnCreate(savedInstanceState);
 
-            // Create your application here
             SetContentView(Resource.Layout.activity_signin);
 
             _restServiceSignIn = new RestService();
@@ -48,7 +47,7 @@ namespace ListWithJson.Activities
             string email = editTextEmail.Text;
             string password = editTextPassword.Text;
 
-            User user = await _restServiceSignIn.SignIn(email, password);
+            User user = await _restServiceSignIn.Authenticate(new User { Email = email, Password = password }, false);
 
             if (user != null)
             {
@@ -59,7 +58,7 @@ namespace ListWithJson.Activities
             }
             else
             {
-                Toast.MakeText(this, "Incorrect email or password", ToastLength.Long).Show();
+                Toast.MakeText(this, Resource.String.incorrect_pass_or_email, ToastLength.Long).Show();
             }
         }
     }
