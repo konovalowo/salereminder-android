@@ -39,18 +39,11 @@ namespace ListWithJson
 
             // Sign in
             // Check is signed in
-            if (AppPreferenceUser.isLogged)
-            {
-                _user = AppPreferenceUser.GetUser();
-            }
-            else
-            {
-                var intent = new Intent(this, typeof(SignInActivity));
-                StartActivity(intent);
-                Finish();
-            }
+            //AuthenticateUser();
 
-            _restService = new RestService();
+            //delete
+            _user = new User("boy", "bang");
+            _restService = new RestService(_user);
 
             // Toolbar
             var toolbar = FindViewById<Android.Widget.Toolbar>(Resource.Id.toolbar);
@@ -78,6 +71,20 @@ namespace ListWithJson
 
             // Handling itemClick event
             productAdapter.ItemClick += OnItemClickHandler;
+        }
+
+        private void AuthenticateUser()
+        {
+            if (AppPreferenceUser.isLogged)
+            {
+                _user = AppPreferenceUser.GetUser();
+            }
+            else
+            {
+                var intent = new Intent(this, typeof(SignInActivity));
+                StartActivity(intent);
+                Finish();
+            }
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
@@ -128,7 +135,7 @@ namespace ListWithJson
             }
         }
 
-        // Menu
+        // Toolbar
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
             MenuInflater.Inflate(Resource.Menu.top_menus, menu);
@@ -137,7 +144,16 @@ namespace ListWithJson
 
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
-            var ignoreTask = OnOptionsItemSelectedAsync(item);
+            switch (item.ItemId)
+            {
+                case Resource.Id.menuSignout:
+                    AppPreferenceUser.RemoveUser();
+                    AuthenticateUser();
+                    break;
+                case Resource.Id.menuRefresh:
+                    var ignoreTask = OnOptionsItemSelectedAsync(item);
+                    break;
+            }
             return base.OnOptionsItemSelected(item);
         }
 

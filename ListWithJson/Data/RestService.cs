@@ -32,38 +32,9 @@ namespace ListWithJson
             _user = user;
         }
 
-        public async Task<User> Register(User user)
-        {
-            var uri = new Uri(string.Format(Constants.ApiAuthenticationUrl, "create"));
-            var json = JsonConvert.SerializeObject(user);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-            try
-            {
-                var response = await _client.PostAsync(uri, content);
-                if (response.IsSuccessStatusCode)
-                {
-                    Log.Debug("RestService", "Succesfully created account.");
-                    string contentString = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<User>(contentString);
-                }
-                else
-                {
-                    Log.Error("RestService", $"Failed to create account {response.StatusCode}: {response.ReasonPhrase}");
-                    return null;
-                }
-            }
-            catch (Exception e)
-            {
-                Log.Error("RestService", e.Message);
-                return null;
-            }
-        }
-
-
         public async Task<User> Authenticate(User user, bool isCreate)
         {
-            var uri = new Uri(string.Format(Constants.ApiAuthenticationUrl, isCreate ? "create" : "signin"));
+            var uri = new Uri(string.Format(Constants.ApiAuthenticationUrl, isCreate ? "register" : "login"));
             var json = JsonConvert.SerializeObject(user);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
@@ -82,6 +53,11 @@ namespace ListWithJson
                         $" {response.StatusCode}: {response.ReasonPhrase}");
                     return null;
                 }
+            }
+            catch (HttpRequestException e)
+            {
+                Log.Error("RestService", e.Message);
+                return null;
             }
             catch (Exception e)
             {
@@ -107,6 +83,11 @@ namespace ListWithJson
                 {
                     Log.Error("RestService", $"Get response status code {response.StatusCode}: {response.ReasonPhrase}");
                 }
+            }
+            catch (HttpRequestException e)
+            {
+                Log.Error("RestService", e.Message);
+                return null;
             }
             catch (Exception e)
             {
@@ -138,6 +119,11 @@ namespace ListWithJson
                     return null;
                 }
             }
+            catch (HttpRequestException e)
+            {
+                Log.Error("RestService", e.Message);
+                return null;
+            }
             catch (Exception e)
             {
                 Log.Error("RestService", e.Message);
@@ -154,6 +140,10 @@ namespace ListWithJson
                 var response = await _client.DeleteAsync(uri);
                 if (response.IsSuccessStatusCode)
                     Log.Debug("RestService", "Item succesfully deleted.");
+            }
+            catch (HttpRequestException e)
+            {
+                Log.Error("RestService", e.Message);
             }
             catch (Exception e)
             {

@@ -8,8 +8,9 @@
   <string name="email">Email</string>
   <string name="incorrect_pass_or_email">Incorrect email or password</string>
   <string name="invalid_email_format">Invalid email format</string>
-  <string name="passwords_dont_match">Passwords don't match</string>
+  <string name="passwords_dont_match">Passwords don\'t match</string>
   <string name="password_tooshort">Password must contain at least 8 characters</string>
   <string name="product_page_link">Go to product page</string>
   <string name="delete_product">Delete product</string>
+  <string name="menu_item_signout">Sign out</string>
 </resources>

@@ -18,19 +18,21 @@ namespace ListWithJson.Utils
 {
     static class AppPreferenceUser
     {
-        public static bool isLogged => Preferences.ContainsKey("user");
+        const string userKey = "user";
+
+        public static bool isLogged => Preferences.ContainsKey(userKey);
 
         public static void SetUser(User user)
         {
             string userJson = JsonConvert.SerializeObject(user);
-            Preferences.Set("user", userJson);
+            Preferences.Set(userKey, userJson);
         }
 
         public static User GetUser()
         {
-            if (Preferences.ContainsKey("user"))
+            if (Preferences.ContainsKey(userKey))
             {
-                string userJson = Preferences.Get("user", null);
+                string userJson = Preferences.Get(userKey, null);
                 User user = JsonConvert.DeserializeObject<User>(userJson);
                 return user;
             }
@@ -38,6 +40,11 @@ namespace ListWithJson.Utils
             {
                 return null;
             }
+        }
+
+        public static void RemoveUser()
+        {
+            Preferences.Remove(userKey);
         }
     }
 }

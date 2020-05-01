@@ -13,4 +13,5 @@
   <string name="password_tooshort">Пароль должен содержать минимум 8 символов</string>
   <string name="product_page_link">Перейти на страницу товара</string>
   <string name="delete_product">Удалить товар</string>
+  <string name="menu_item_signout">Выйти</string>
 </resources>
