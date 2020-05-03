@@ -22,7 +22,7 @@ namespace ListWithJson
         public string Brand { get; set; }
         public string Currency { get; set; }
         public decimal Price { get; set; }
-        public decimal Discount { get; set; }
+        public bool IsOnSale { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }
 

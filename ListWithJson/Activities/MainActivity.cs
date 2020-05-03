@@ -18,6 +18,8 @@ using System.Threading.Tasks;
 using ListWithJson.Activities;
 using ListWithJson.Models;
 using ListWithJson.Utils;
+using System;
+using Android.Util;
 
 namespace ListWithJson
 {
@@ -39,10 +41,9 @@ namespace ListWithJson
 
             // Sign in
             // Check is signed in
-            //AuthenticateUser();
+            AuthenticateUser();
 
             //delete
-            _user = new User("boy", "bang");
             _restService = new RestService(_user);
 
             // Toolbar

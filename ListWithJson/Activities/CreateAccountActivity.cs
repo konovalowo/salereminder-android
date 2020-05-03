@@ -64,6 +64,7 @@ namespace ListWithJson.Activities
 
             if (user != null)
             {
+                user.Password = password;
                 AppPreferenceUser.SetUser(user);
                 var intent = new Intent(this, typeof(MainActivity));
                 StartActivity(intent);

@@ -73,7 +73,7 @@
                 android:id="@+id/descTextView"
                 android:textSize="20dp" />
             <Button
-                android:text="Go to product page"
+                android:text="@string/product_page_link"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -83,7 +83,7 @@
                 android:background="?android:attr/colorAccent"
                 android:id="@+id/buttonOpenUrl"/>
             <Button
-                android:text="Delete product"
+                android:text="@string/delete_product"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"

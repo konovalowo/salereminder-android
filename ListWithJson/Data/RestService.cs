@@ -26,15 +26,22 @@ namespace ListWithJson
 
         public RestService(User user) : this()
         {
-            string authData = $"{user.Email}:{user.Password}";
-            string base64AuthData = Convert.ToBase64String(Encoding.UTF8.GetBytes(authData));
-            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", base64AuthData);
-            _user = user;
+            try
+            {
+                string authData = $"{user.Email}:{user.Password}";
+                string base64AuthData = Convert.ToBase64String(Encoding.UTF8.GetBytes(authData));
+                _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", base64AuthData);
+                _user = user;
+            }
+            catch (NullReferenceException)
+            {
+                Log.Error("RestService", "NullReferenceException");
+            }
         }
 
         public async Task<User> Authenticate(User user, bool isCreate)
         {
-            var uri = new Uri(string.Format(Constants.ApiAuthenticationUrl, isCreate ? "register" : "login"));
+            var uri = new Uri(string.Format(Constants.ApiAuthenticationUrl, (isCreate ? "register" : "login")));
             var json = JsonConvert.SerializeObject(user);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
