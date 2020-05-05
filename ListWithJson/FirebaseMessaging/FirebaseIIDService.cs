@@ -20,11 +20,11 @@ namespace ListWithJson.FirebaseMessaging
     [IntentFilter(new[] { "com.google.firebase.INSTANCE_ID_EVENT" })]
     public class FirebaseIIDService : FirebaseInstanceIdService
     {
-        const string TAG = "MyFirebaseIIDService";
+        const string logTag = "MyFirebaseIIDService";
         public override void OnTokenRefresh()
         {
             var refreshedToken = FirebaseInstanceId.Instance.Token;
-            Log.Debug(TAG, "Refreshed token: " + refreshedToken);
+            Log.Debug(logTag, "Refreshed token: " + refreshedToken);
             Preferences.Set(Constants.FirebaseTokenPreferenceTag, refreshedToken);
         }
     }

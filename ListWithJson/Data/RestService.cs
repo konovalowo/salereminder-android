@@ -104,7 +104,7 @@ namespace ListWithJson
                 {
 
                     var uri = new Uri(Constants.ApiFirebaseTokenRegistration);
-                    var content = new StringContent(token, Encoding.UTF8);
+                    var content = new StringContent(JsonConvert.SerializeObject(token), Encoding.UTF8, "application/json");
 
                     var response = await _client.PostAsync(uri, content);
 

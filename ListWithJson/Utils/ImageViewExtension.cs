@@ -18,6 +18,8 @@ namespace ListWithJson
 {
     public static class ImageViewExtension
     {
+        const string logTag = "ImageFromUrlAsync";
+
         public async static void ImageFromUrlAsync(this ImageView iv,  string url)
         {
             Bitmap imageBitmap = null;
@@ -35,15 +37,15 @@ namespace ListWithJson
             }
             catch (Java.Net.UnknownHostException e)
             {
-                Log.Error("ImageFromUrlAsync", e.Message);
+                Log.Error(logTag, e.Message);
             }
             catch (NullReferenceException e)
             {
-                Log.Error("ImageFromUrlAsync", "Null image url: " + e.Message);
+                Log.Error(logTag, "Null image url: " + e.Message);
             }
             catch (Exception e)
             {
-                Log.Error("ImageFromUrlAsync", e.Message);
+                Log.Error(logTag, e.Message);
             }
 
             iv.SetImageBitmap(imageBitmap);
