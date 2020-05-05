@@ -17,5 +17,8 @@ namespace ListWithJson
         public static string BaseAdress = "https://10.0.2.2:5001";
         public static string ApiProductsUrl = BaseAdress + "/api/Products/{0}";
         public static string ApiAuthenticationUrl = BaseAdress + "/api/User/{0}";
+        public static string ApiFirebaseTokenRegistration = BaseAdress + "/api/User/register_firebase_token";
+
+        public static string FirebaseTokenPreferenceTag = "firebase_registration_token";
     }
 }

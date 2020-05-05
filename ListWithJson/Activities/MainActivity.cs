@@ -20,6 +20,8 @@ using ListWithJson.Models;
 using ListWithJson.Utils;
 using System;
 using Android.Util;
+using Android.Gms.Common;
+using Xamarin.Essentials;
 
 namespace ListWithJson
 {
@@ -32,6 +34,8 @@ namespace ListWithJson
         List<Product> products;
         ProductAdapter productAdapter;
 
+        const string ChannelId = "salereminder_channel";
+
         protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -39,12 +43,24 @@ namespace ListWithJson
 
             SetContentView(Resource.Layout.activity_main);
 
+            _restService = new RestService();
+
             // Sign in
             // Check is signed in
-            AuthenticateUser();
+            _user = AuthenticateUser();
+            
+            // Send token after user logged in
+            if (await _restService.Authenticate(_user, false) != null)
+            {
+                _restService.User = _user;
+                await _restService.RegisterFirebaseToken(Preferences.Get(Constants.FirebaseTokenPreferenceTag, null));
+            }
+            else
+            {
+                AppPreferenceUser.RemoveUser();
+                AuthenticateUser();
+            }
 
-            //delete
-            _restService = new RestService(_user);
 
             // Toolbar
             var toolbar = FindViewById<Android.Widget.Toolbar>(Resource.Id.toolbar);
@@ -72,19 +88,24 @@ namespace ListWithJson
 
             // Handling itemClick event
             productAdapter.ItemClick += OnItemClickHandler;
+
+            // Firebase messaging
+            IsPlayServicesAvailable();
+            CreateNotificationChannel();
         }
 
-        private void AuthenticateUser()
+        private User AuthenticateUser()
         {
             if (AppPreferenceUser.isLogged)
             {
-                _user = AppPreferenceUser.GetUser();
+                 return AppPreferenceUser.GetUser(); 
             }
             else
             {
                 var intent = new Intent(this, typeof(SignInActivity));
                 StartActivity(intent);
                 Finish();
+                return null;
             }
         }
 
@@ -168,6 +189,48 @@ namespace ListWithJson
             List<Product> productsNew = await _restService.Get();
             productAdapter.products = productsNew;
             productAdapter.NotifyDataSetChanged();
+        }
+
+        // FirebaseMessaging
+        public bool IsPlayServicesAvailable()
+        {
+            int resultCode = GoogleApiAvailability.Instance.IsGooglePlayServicesAvailable(this);
+            if (resultCode != ConnectionResult.Success)
+            {
+                if (GoogleApiAvailability.Instance.IsUserResolvableError(resultCode))
+                {
+                    Log.Info("MainActivity", GoogleApiAvailability.Instance.GetErrorString(resultCode));
+                }
+                else
+                {
+                    Toast.MakeText(BaseContext.ApplicationContext, "Google Play services unavailable", ToastLength.Long).Show();
+                    Finish();
+                }
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        void CreateNotificationChannel()
+        {
+            if (Build.VERSION.SdkInt < BuildVersionCodes.O)
+            {
+                return;
+            }
+
+            var channel = new NotificationChannel(ChannelId,
+                                                  "Sale Reminder notifications",
+                                                  NotificationImportance.Default)
+            {
+
+                Description = "Firebase Cloud Messages appear in this channel"
+            };
+
+            var notificationManager = (NotificationManager)GetSystemService(Android.Content.Context.NotificationService);
+            notificationManager.CreateNotificationChannel(channel);
         }
     }
 }

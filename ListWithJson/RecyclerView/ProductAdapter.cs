@@ -10,7 +10,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.Support.V7.Widget;
-
+using Android.Content.Res;
 
 namespace ListWithJson
 {
@@ -38,6 +38,15 @@ namespace ListWithJson
             vh.Image.ImageFromUrlAsync(products[position].Image);
             vh.ProductName.Text = products[position].Name;
             vh.ProductPrice.Text = products[position].Price.ToString("C", products[position].GetCulture());
+            if (products[position].IsOnSale)
+            {
+                vh.ProductPrice.SetTextColor(vh.OnSaleLabel.TextColors);
+                vh.OnSaleLabel.Visibility = ViewStates.Visible;
+            }
+            else
+            {
+                vh.OnSaleLabel.Visibility = ViewStates.Gone;
+            }
         }
 
         public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)

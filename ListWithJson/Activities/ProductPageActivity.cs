@@ -39,8 +39,19 @@ namespace ListWithJson
             var imageView = FindViewById<ImageView>(Resource.Id.productImageView);
             var nameTextView = FindViewById<TextView>(Resource.Id.nameTextView);
             var priceTextView = FindViewById<TextView>(Resource.Id.priceTextView);
+            var onSaleTextView = FindViewById<TextView>(Resource.Id.onSalePageTextView);
             var descTextView = FindViewById<TextView>(Resource.Id.descTextView);
             var brandTextView = FindViewById<TextView>(Resource.Id.brandTextView);
+
+            if (product.IsOnSale)
+            {
+                priceTextView.SetTextColor(onSaleTextView.TextColors);
+                onSaleTextView.Visibility = ViewStates.Visible;
+            }
+            else
+            {
+                onSaleTextView.Visibility = ViewStates.Gone;
+            }
 
             var urlButton = FindViewById<Button>(Resource.Id.buttonOpenUrl);
             var deleteButton = FindViewById<Button>(Resource.Id.buttonDelete);

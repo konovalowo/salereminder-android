@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1073770633904",
+    "firebase_url": "https://sale-reminder-2020.firebaseio.com",
+    "project_id": "sale-reminder-2020",
+    "storage_bucket": "sale-reminder-2020.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1073770633904:android:31345f7b84c29316a97975",
+        "android_client_info": {
+          "package_name": "com.cutumun.salereminder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1073770633904-gi54ht88gumup1sks8dcp3cb8cjf4v8q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwPVA80XURgonmQ9Q1yPTiKjJaCSiEflc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1073770633904-gi54ht88gumup1sks8dcp3cb8cjf4v8q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
