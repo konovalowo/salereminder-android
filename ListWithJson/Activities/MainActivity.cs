@@ -81,7 +81,7 @@ namespace ListWithJson
             products = await _restService.Get();
 
             // Setting up RecyclerView
-            var productRecyclerView = FindViewById<RecyclerView>(Resource.Id.recyclerViewProducts);
+            var productRecyclerView = FindViewById<Android.Support.V7.Widget.RecyclerView>(Resource.Id.recyclerViewProducts);
             productRecyclerView.SetLayoutManager(new GridLayoutManager(this, 2));
             productAdapter = new ProductAdapter(products);
             productRecyclerView.SetAdapter(productAdapter);
@@ -150,7 +150,7 @@ namespace ListWithJson
         private async void OnAddButtonClickedHandler(object sender, AddButtonEventArgs e)
         {
             string url = e.Text;
-            var product = await _restService.Post(new Product() { Url = url });
+            var product = await _restService.Put(url);
             if (product != null)
             {
                 productAdapter.AddItem(product);

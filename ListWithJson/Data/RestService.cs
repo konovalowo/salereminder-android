@@ -148,7 +148,6 @@ namespace ListWithJson
                 {
                     var content = await response.Content.ReadAsStringAsync();
                     products = new List<Product>(JsonConvert.DeserializeObject<Product[]>(content));
-                    products[0].IsOnSale = true;
                 }
                 else
                 {
@@ -167,16 +166,16 @@ namespace ListWithJson
             return products;
         }
 
-        public async Task<Product> Post(Product product)
+        public async Task<Product> Put(string productUrl)
         {
             var uri = new Uri(string.Format(Constants.ApiProductsUrl, string.Empty));
 
-            var json = JsonConvert.SerializeObject(product);
+            var json = JsonConvert.SerializeObject(productUrl);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             try
             {
-                var response = await _client.PostAsync(uri, content);
+                var response = await _client.PutAsync(uri, content);
                 if (response.IsSuccessStatusCode)
                 {
                     Log.Debug(logTag, "Item succesfully saved.");

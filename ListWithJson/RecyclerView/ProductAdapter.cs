@@ -11,10 +11,11 @@ using Android.Views;
 using Android.Widget;
 using Android.Support.V7.Widget;
 using Android.Content.Res;
+using static Android.Support.V7.Widget.RecyclerView;
 
 namespace ListWithJson
 {
-    class ProductAdapter : RecyclerView.Adapter
+    class ProductAdapter : Android.Support.V7.Widget.RecyclerView.Adapter
     {
         public List<Product> products;
         public event EventHandler<ItemEventArgs> ItemClick;
@@ -31,7 +32,7 @@ namespace ListWithJson
             ItemClick?.Invoke(this, new ItemEventArgs(products[position]));
         }
 
-        public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
+        public override void OnBindViewHolder(ViewHolder holder, int position)
         {
             ProductViewHolder vh = holder as ProductViewHolder;
 
@@ -49,7 +50,7 @@ namespace ListWithJson
             }
         }
 
-        public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
+        public override ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
         {
             View itemView = LayoutInflater.From(parent.Context).
                         Inflate(Resource.Layout.product_view, parent, false);
