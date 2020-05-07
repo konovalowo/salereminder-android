@@ -1,30 +1,46 @@
-
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:minWidth="25px"
-    android:minHeight="25px">
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar" />
-    <android.support.v7.widget.RecyclerView
-        android:minWidth="25px"
-        android:minHeight="25px"
-        android:layout_marginTop="@dimen/abc_action_bar_default_height_material"
+    android:orientation="vertical">
+    <android.support.v4.widget.DrawerLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/recyclerViewProducts" />
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_alignBottom="@id/recyclerViewProducts"
-        android:layout_alignRight="@id/recyclerViewProducts"
-        android:layout_marginRight="30dp"
-        android:layout_marginBottom="30dp"
-        android:src="@drawable/baseline_add_white_18dp"
-        android:id="@+id/fabAdd" />
-
-</RelativeLayout>
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:id="@+id/drawerLayout">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:minWidth="25px"
+            android:minHeight="25px">
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar" />
+            <android.support.v7.widget.RecyclerView
+                android:minWidth="25px"
+                android:minHeight="25px"
+                android:layout_marginTop="@dimen/abc_action_bar_default_height_material"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/recyclerViewProducts" />
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_alignBottom="@id/recyclerViewProducts"
+                android:layout_alignRight="@id/recyclerViewProducts"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="30dp"
+                android:src="@drawable/baseline_add_white_18dp"
+                android:id="@+id/fabAdd" />
+        </RelativeLayout>
+        <android.support.design.widget.NavigationView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:id="@+id/navigationView"/>
+    </android.support.v4.widget.DrawerLayout>
+</LinearLayout>

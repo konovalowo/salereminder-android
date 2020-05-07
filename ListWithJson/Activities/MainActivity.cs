@@ -66,6 +66,8 @@ namespace ListWithJson
             var toolbar = FindViewById<Android.Widget.Toolbar>(Resource.Id.toolbar);
             SetActionBar(toolbar);
             ActionBar.Title = Resources.GetString(Resource.String.app_name);
+            ActionBar.SetDisplayShowHomeEnabled(true);
+            ActionBar.SetDisplayHomeAsUpEnabled(true);
 
             // Fab
             var fab = FindViewById<FloatingActionButton>(Resource.Id.fabAdd);
@@ -154,6 +156,10 @@ namespace ListWithJson
             if (product != null)
             {
                 productAdapter.AddItem(product);
+            }
+            else
+            {
+                Toast.MakeText(ApplicationContext, Resource.String.error_parsing, ToastLength.Long);
             }
         }
 
