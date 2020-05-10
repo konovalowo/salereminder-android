@@ -23,6 +23,11 @@ namespace ListWithJson
         public async static void ImageFromUrlAsync(this ImageView iv,  string url)
         {
             Bitmap imageBitmap = null;
+            url = url.Trim('/');
+            if (url.IndexOf("https://") == -1)
+            {
+                url = "https://" + url;
+            }
 
             try
             {
@@ -33,6 +38,7 @@ namespace ListWithJson
                     {
                         imageBitmap = BitmapFactory.DecodeByteArray(imageBytes, 0, imageBytes.Length);
                     }
+                    iv.SetImageBitmap(imageBitmap);
                 }
             }
             catch (Java.Net.UnknownHostException e)
@@ -48,7 +54,6 @@ namespace ListWithJson
                 Log.Error(logTag, e.Message);
             }
 
-            iv.SetImageBitmap(imageBitmap);
         }
     }
 

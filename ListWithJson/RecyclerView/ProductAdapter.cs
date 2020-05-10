@@ -15,14 +15,24 @@ using static Android.Support.V7.Widget.RecyclerView;
 
 namespace ListWithJson
 {
-    class ProductAdapter : Android.Support.V7.Widget.RecyclerView.Adapter
+    class ProductAdapter : RecyclerView.Adapter
     {
-        public List<Product> products;
+        private List<Product> products;
+        private List<Product> currentList;
+
         public event EventHandler<ItemEventArgs> ItemClick;
 
-        public ProductAdapter(List<Product> products)
+        private Context _context;
+
+        private string currentWebsiteFilter;
+
+        public event EventHandler OnListChanged;
+
+        public ProductAdapter(List<Product> products, Context context)
         {
             this.products = products;
+            currentList = products;
+            _context = context;
         }
 
         public override int ItemCount => products.Count;
@@ -36,6 +46,7 @@ namespace ListWithJson
         {
             ProductViewHolder vh = holder as ProductViewHolder;
 
+            vh.Image.SetImageDrawable(_context.GetDrawable(Resource.Drawable.ic_material_product_icon)); // placeholder
             vh.Image.ImageFromUrlAsync(products[position].Image);
             vh.ProductName.Text = products[position].Name;
             vh.ProductPrice.Text = products[position].Price.ToString("C", products[position].GetCulture());
@@ -59,9 +70,37 @@ namespace ListWithJson
             return vh;
         }
 
-        public void AddItem(Product product)
+        public void SetProducts(List<Product> products)
         {
-            products.Add(product);
+            currentList = products;
+            FilterByWebsite(currentWebsiteFilter);
+            OnListChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        //public void AddItem(Product product)
+        //{
+        //    products.Add(product);
+        //    NotifyDataSetChanged();
+        //}
+
+        public List<string> GetWebsites()
+        {
+            var websites = currentList.GroupBy(p => p.GetWebsiteShort())
+                                      .Select(g => g.Key);
+            return websites.ToList();
+        }
+
+        public void FilterByWebsite(string websiteUrl)
+        {
+            currentWebsiteFilter = websiteUrl;
+            if (websiteUrl != null)
+            {
+                products = currentList.Where(p => p.GetWebsiteShort() == websiteUrl).ToList();
+            }
+            else
+            {
+                products = currentList;
+            }
             NotifyDataSetChanged();
         }
     }

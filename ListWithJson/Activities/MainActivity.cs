@@ -22,17 +22,24 @@ using System;
 using Android.Util;
 using Android.Gms.Common;
 using Xamarin.Essentials;
+using Android.Support.V4.Widget;
 
 namespace ListWithJson
 {
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true)]
     public class MainActivity : Activity
     {
+        const string logTag = "MainActivity";
+
         RestService _restService;
         User _user;
 
         List<Product> products;
         ProductAdapter productAdapter;
+
+        DrawerLayout drawerLayout;
+
+        ArrayAdapter filterListAdapter;
 
         const string ChannelId = "salereminder_channel";
 
@@ -48,6 +55,11 @@ namespace ListWithJson
             // Sign in
             // Check is signed in
             _user = AuthenticateUser();
+            if (_user == null)
+            {
+                Finish();
+                return;
+            }
             
             // Send token after user logged in
             if (await _restService.Authenticate(_user, false) != null)
@@ -61,13 +73,27 @@ namespace ListWithJson
                 AuthenticateUser();
             }
 
+            // Navigation drawer
+            drawerLayout = FindViewById<DrawerLayout>(Resource.Id.drawerLayout);
+            var navigationView = FindViewById<NavigationView>(Resource.Id.navigationView);
 
             // Toolbar
             var toolbar = FindViewById<Android.Widget.Toolbar>(Resource.Id.toolbar);
             SetActionBar(toolbar);
-            ActionBar.Title = Resources.GetString(Resource.String.app_name);
-            ActionBar.SetDisplayShowHomeEnabled(true);
+            //ActionBar.Title = Resources.GetString(Resource.String.app_name);
+            ActionBar.Title = GetString(Resource.String.all_products);
+            ActionBar.SetHomeButtonEnabled(true);
             ActionBar.SetDisplayHomeAsUpEnabled(true);
+            ActionBar.SetHomeAsUpIndicator(GetDrawable(Resource.Drawable.baseline_menu_white_18dp));
+
+            toolbar.NavigationOnClick += (s, e) =>
+            {
+                drawerLayout.OpenDrawer(Android.Support.V4.View.GravityCompat.Start);
+            };
+
+
+            // drawer
+            var drawer = FindViewById<DrawerLayout>(Resource.Id.drawerLayout);
 
             // Fab
             var fab = FindViewById<FloatingActionButton>(Resource.Id.fabAdd);
@@ -80,20 +106,63 @@ namespace ListWithJson
             };
 
             // Product list
-            products = await _restService.Get();
+            products = new List<Product>();
+            products.AddRange(await _restService.Get());
 
             // Setting up RecyclerView
-            var productRecyclerView = FindViewById<Android.Support.V7.Widget.RecyclerView>(Resource.Id.recyclerViewProducts);
+            var productRecyclerView = FindViewById<RecyclerView>(Resource.Id.recyclerViewProducts);
             productRecyclerView.SetLayoutManager(new GridLayoutManager(this, 2));
-            productAdapter = new ProductAdapter(products);
+            productAdapter = new ProductAdapter(products, this);
             productRecyclerView.SetAdapter(productAdapter);
 
             // Handling itemClick event
             productAdapter.ItemClick += OnItemClickHandler;
 
+            //Filter list on Navigation drawer
+            var filterListView = FindViewById<ListView>(Resource.Id.filterListView);
+            var websites = new List<string> { GetString(Resource.String.all_products) };
+            websites.AddRange(productAdapter.GetWebsites());
+            filterListAdapter = new ArrayAdapter(this, Android.Resource.Layout.SimpleListItemActivated1, websites);
+            filterListView.Adapter = filterListAdapter;
+            filterListView.ItemClick += FilterListView_ItemClick;
+            filterListView.ItemClick += (s, e) => drawerLayout.CloseDrawer(Android.Support.V4.View.GravityCompat.Start);
+            filterListView.ChoiceMode = ChoiceMode.Single;
+            filterListView.SetItemChecked(0, true);
+
+            productAdapter.OnListChanged += (s, e) =>
+            {
+                filterListAdapter.Clear();
+                var websites = new List<string> { GetString(Resource.String.all_products) };
+                websites.AddRange(productAdapter.GetWebsites());
+                filterListAdapter.AddAll(websites);
+                filterListAdapter.NotifyDataSetChanged();
+            };
+
             // Firebase messaging
             IsPlayServicesAvailable();
             CreateNotificationChannel();
+        }
+
+        private void FilterListView_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
+        {
+            try
+            {
+                if (e.Id == 0)
+                {
+                    ActionBar.Title = GetString(Resource.String.all_products);
+                    productAdapter.FilterByWebsite(null);
+                }
+                else
+                {
+                    string websiteUrl = productAdapter.GetWebsites()[(int)e.Id - 1];
+                    ActionBar.Title = websiteUrl;
+                    productAdapter.FilterByWebsite(websiteUrl);
+                }
+            }
+            catch (IndexOutOfRangeException)
+            {
+                Log.Error(logTag, "Websites filter out of range");
+            }
         }
 
         private User AuthenticateUser()
@@ -106,7 +175,6 @@ namespace ListWithJson
             {
                 var intent = new Intent(this, typeof(SignInActivity));
                 StartActivity(intent);
-                Finish();
                 return null;
             }
         }
@@ -155,11 +223,12 @@ namespace ListWithJson
             var product = await _restService.Put(url);
             if (product != null)
             {
-                productAdapter.AddItem(product);
+                await RefreshProductListPage();
+                //productAdapter.AddItem(product);
             }
             else
             {
-                Toast.MakeText(ApplicationContext, Resource.String.error_parsing, ToastLength.Long);
+                Toast.MakeText(ApplicationContext, Resource.String.error_parsing, ToastLength.Long).Show();
             }
         }
 
@@ -193,8 +262,9 @@ namespace ListWithJson
         public async Task RefreshProductListPage()
         {
             List<Product> productsNew = await _restService.Get();
-            productAdapter.products = productsNew;
-            productAdapter.NotifyDataSetChanged();
+            productAdapter.SetProducts(productsNew);
+            //productAdapter.products = productsNew;
+            //productAdapter.NotifyDataSetChanged();
         }
 
         // FirebaseMessaging
@@ -205,11 +275,11 @@ namespace ListWithJson
             {
                 if (GoogleApiAvailability.Instance.IsUserResolvableError(resultCode))
                 {
-                    Log.Info("MainActivity", GoogleApiAvailability.Instance.GetErrorString(resultCode));
+                    Log.Info(logTag, GoogleApiAvailability.Instance.GetErrorString(resultCode));
                 }
                 else
                 {
-                    Toast.MakeText(BaseContext.ApplicationContext, "Google Play services unavailable", ToastLength.Long).Show();
+                    Toast.MakeText(ApplicationContext, "Google Play services unavailable", ToastLength.Long).Show();
                     Finish();
                 }
                 return false;

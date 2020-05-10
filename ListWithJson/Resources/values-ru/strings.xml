@@ -15,4 +15,8 @@
   <string name="delete_product">Удалить товар</string>
   <string name="menu_item_signout">Выйти</string>
   <string name="error_parsing">Неверная ссылка или неподдерживаемый магазин</string>
+  <string name="add_product">Добавить товар</string>
+  <string name="add_product_button">Добавить</string>
+  <string name="add_product_hint">Введите ссылку</string>
+  <string name="all_products">Все</string>
 </resources>

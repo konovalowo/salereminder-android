@@ -208,7 +208,9 @@ namespace ListWithJson
             {
                 var response = await _client.DeleteAsync(uri);
                 if (response.IsSuccessStatusCode)
+                {
                     Log.Debug(logTag, "Item succesfully deleted.");
+                }
             }
             catch (HttpRequestException e)
             {

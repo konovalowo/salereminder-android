@@ -28,23 +28,57 @@ namespace ListWithJson
 
         public CultureInfo GetCulture()
         {
-            var culture = CultureInfo.GetCultures(CultureTypes.SpecificCultures).First(culture =>
+            CultureInfo culture;
+            try
             {
-                try
+                culture = CultureInfo.GetCultures(CultureTypes.SpecificCultures).First(culture =>
                 {
-                    var regionInfo = new RegionInfo(culture.Name);
-                    if (regionInfo.ISOCurrencySymbol == Currency)
+                    try
                     {
-                        return true;
+                        var regionInfo = new RegionInfo(culture.Name);
+                        if (regionInfo.ISOCurrencySymbol == Currency)
+                        {
+                            return true;
+                        }
+                        return false;
                     }
-                    return false;
-                }
-                catch
-                {
-                    return false;
-                }
-            });
+                    catch
+                    {
+                        return false;
+                    }
+                });
+            }
+            catch (InvalidOperationException e) // no match
+            {
+                culture = CultureInfo.CurrentCulture;
+            }
             return culture;
+        }
+
+        public string GetWebsiteShort()
+        {
+            int startIndex = Url.IndexOf('.');
+            int endIndex = Url.IndexOf('/', startIndex + 1); // //www.avc.ru/   -   //egg.com/
+            if (Url.IndexOf('.', startIndex + 1, endIndex - startIndex) == -1)
+            {
+                startIndex = Url.IndexOf("//") + 1;
+            }
+            if (startIndex != -1 && endIndex != -1)
+            {
+                return Url.Substring(startIndex + 1, endIndex - startIndex - 1);
+            }
+            return null;
+        }
+
+        public string GetWebsite()
+        {
+            int dotIndex = Url.IndexOf('.');
+            int endIndex = Url.IndexOf('/', dotIndex + 1);
+            if (dotIndex != -1 && endIndex != -1)
+            {
+                return Url.Substring(0, endIndex);
+            }
+            return null;
         }
     }
 }

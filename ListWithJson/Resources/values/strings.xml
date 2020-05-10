@@ -14,4 +14,8 @@
   <string name="delete_product">Delete product</string>
   <string name="menu_item_signout">Sign out</string>
   <string name="error_parsing">Incorrect link or unsupported website</string>
+  <string name="add_product">Add product</string>
+  <string name="add_product_button">Add</string>
+  <string name="add_product_hint">Enter product url</string>
+  <string name="all_products">All</string>
 </resources>

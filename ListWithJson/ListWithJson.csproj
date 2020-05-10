@@ -69,6 +69,7 @@
     <Compile Include="FirebaseMessaging\FirebaseIIDService.cs" />
     <Compile Include="Models\AddDialogEventArgs.cs" />
     <Compile Include="Activities\AddDialogFragment.cs" />
+    <Compile Include="Models\ServerResponse.cs" />
     <Compile Include="Models\Constants.cs" />
     <Compile Include="Data\RestService.cs" />
     <Compile Include="Utils\ImageViewExtension.cs" />
@@ -181,9 +182,14 @@
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_material_product_icon.png" />
+  </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values-ru\strings.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\baseline_menu_white_18dp.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

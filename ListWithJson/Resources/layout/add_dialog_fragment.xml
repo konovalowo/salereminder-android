@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:text="Add item"
+            android:text="@string/add_product"
             android:layout_marginLeft="5dp"
             android:textColor ="@android:color/black"
             android:textSize="20dp"
@@ -21,12 +21,12 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter product url"
+            android:hint="@string/add_product_hint"
             android:minWidth="25px"
             android:minHeight="25px"
             android:id="@+id/editText1" />
         <Button
-            android:text="Add"
+            android:text="@string/add_product_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/button1"
