@@ -86,6 +86,7 @@ namespace ListWithJson
         public List<string> GetWebsites()
         {
             var websites = currentList.GroupBy(p => p.GetWebsiteShort())
+                                      .OrderBy(g => g.Key)
                                       .Select(g => g.Key);
             return websites.ToList();
         }

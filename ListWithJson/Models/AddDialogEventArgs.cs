@@ -12,11 +12,11 @@ using Android.Widget;
 
 namespace ListWithJson
 {
-    public class AddButtonEventArgs
+    public class AddDialogEventArgs
     {
         public string Text { get; set; }
 
-        public AddButtonEventArgs(string text)
+        public AddDialogEventArgs(string text)
         {
             Text = text;
         }

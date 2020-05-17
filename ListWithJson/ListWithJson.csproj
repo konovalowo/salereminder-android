@@ -36,7 +36,7 @@
     <WarningLevel>4</WarningLevel>
     <AndroidUseSharedRuntime>True</AndroidUseSharedRuntime>
     <AndroidLinkMode>None</AndroidLinkMode>
-    <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
+    <EmbedAssembliesIntoApk>false</EmbedAssembliesIntoApk>
     <AotAssemblies>false</AotAssemblies>
     <EnableLLVM>false</EnableLLVM>
     <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
@@ -69,7 +69,6 @@
     <Compile Include="FirebaseMessaging\FirebaseIIDService.cs" />
     <Compile Include="Models\AddDialogEventArgs.cs" />
     <Compile Include="Activities\AddDialogFragment.cs" />
-    <Compile Include="Models\ServerResponse.cs" />
     <Compile Include="Models\Constants.cs" />
     <Compile Include="Data\RestService.cs" />
     <Compile Include="Utils\ImageViewExtension.cs" />
@@ -190,6 +189,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\baseline_menu_white_18dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Diagram.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

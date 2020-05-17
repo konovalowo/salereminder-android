@@ -20,7 +20,7 @@ namespace ListWithJson.Utils
     {
         const string userKey = "user";
 
-        public static bool isLogged => Preferences.ContainsKey(userKey);
+        public static bool IsLogged => Preferences.ContainsKey(userKey);
 
         public static void SetUser(User user)
         {

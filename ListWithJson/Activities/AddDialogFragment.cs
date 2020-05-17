@@ -14,18 +14,16 @@ namespace ListWithJson
 {
     public class AddDialogFragment : DialogFragment
     {
-        public event EventHandler<AddButtonEventArgs> onAddButtonClicked;
-
-        EditText editText;
+        public event EventHandler<AddDialogEventArgs> onAddButtonClicked;
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             var view = inflater.Inflate(Resource.Layout.add_dialog_fragment, container, false);
-            editText = view.FindViewById<EditText>(Resource.Id.editText1);
+            EditText editText = view.FindViewById<EditText>(Resource.Id.editText1);
 
             view.FindViewById<Button>(Resource.Id.button1).Click += (sender, e) =>
             {
-                onAddButtonClicked?.Invoke(this, new AddButtonEventArgs(editText.Text));
+                onAddButtonClicked?.Invoke(this, new AddDialogEventArgs(editText.Text));
                 Dismiss();
             };
             return view;

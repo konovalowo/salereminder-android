@@ -23,6 +23,8 @@ namespace ListWithJson.Activities
         EditText editTextConfirmPassword;
         RestService _restServiceRegister;
 
+        Button buttonCreateAccount;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -31,7 +33,7 @@ namespace ListWithJson.Activities
 
             _restServiceRegister = new RestService();
 
-            var buttonCreateAccount = FindViewById<Button>(Resource.Id.buttonCreateAccount);
+            buttonCreateAccount = FindViewById<Button>(Resource.Id.buttonCreateAccount);
             editTextEmail = FindViewById<EditText>(Resource.Id.editTextEmailCreateAccount);
             editTextPassword = FindViewById<EditText>(Resource.Id.editTextPasswordCreateAccount);
             editTextConfirmPassword = FindViewById<EditText>(Resource.Id.editTextConfirmPasswordCreateAccount);
@@ -44,7 +46,7 @@ namespace ListWithJson.Activities
             string email = editTextEmail.Text;
             string password = editTextPassword.Text;
 
-            if (!isValidEmail(email))
+            if (!IsValidEmail(email))
             {
                 Toast.MakeText(this, Resource.String.invalid_email_format, ToastLength.Long).Show();
                 return;
@@ -60,6 +62,7 @@ namespace ListWithJson.Activities
                 return;
             }
 
+            buttonCreateAccount.Enabled = false;
             User user = await _restServiceRegister.Authenticate(new User { Email = email, Password = password }, true);
 
             if (user != null)
@@ -72,11 +75,12 @@ namespace ListWithJson.Activities
             }
             else
             {
+                buttonCreateAccount.Enabled = true;
                 Toast.MakeText(this, Resource.String.incorrect_pass_or_email, ToastLength.Long).Show();
             }
         }
 
-        private bool isValidEmail(string email) => (Android.Util.Patterns.EmailAddress.Matcher(email).Matches());
+        private bool IsValidEmail(string email) => (Android.Util.Patterns.EmailAddress.Matcher(email).Matches());
 
         public override void OnBackPressed()
         {

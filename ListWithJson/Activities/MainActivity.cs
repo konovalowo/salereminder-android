@@ -32,14 +32,7 @@ namespace ListWithJson
         const string logTag = "MainActivity";
 
         RestService _restService;
-        User _user;
-
-        List<Product> products;
         ProductAdapter productAdapter;
-
-        DrawerLayout drawerLayout;
-
-        ArrayAdapter filterListAdapter;
 
         const string ChannelId = "salereminder_channel";
 
@@ -54,27 +47,29 @@ namespace ListWithJson
 
             // Sign in
             // Check is signed in
-            _user = AuthenticateUser();
-            if (_user == null)
+            User user = AuthenticateUser();
+            if (user == null)
             {
                 Finish();
                 return;
             }
             
             // Send token after user logged in
-            if (await _restService.Authenticate(_user, false) != null)
+            if (await _restService.Authenticate(user, false) != null)
             {
-                _restService.User = _user;
+                _restService.User = user;
                 await _restService.RegisterFirebaseToken(Preferences.Get(Constants.FirebaseTokenPreferenceTag, null));
             }
             else
             {
                 AppPreferenceUser.RemoveUser();
                 AuthenticateUser();
+                Finish();
+                return;
             }
 
             // Navigation drawer
-            drawerLayout = FindViewById<DrawerLayout>(Resource.Id.drawerLayout);
+            DrawerLayout drawerLayout = FindViewById<DrawerLayout>(Resource.Id.drawerLayout);
             var navigationView = FindViewById<NavigationView>(Resource.Id.navigationView);
 
             // Toolbar
@@ -106,7 +101,7 @@ namespace ListWithJson
             };
 
             // Product list
-            products = new List<Product>();
+            List<Product> products = new List<Product>();
             products.AddRange(await _restService.Get());
 
             // Setting up RecyclerView
@@ -122,7 +117,7 @@ namespace ListWithJson
             var filterListView = FindViewById<ListView>(Resource.Id.filterListView);
             var websites = new List<string> { GetString(Resource.String.all_products) };
             websites.AddRange(productAdapter.GetWebsites());
-            filterListAdapter = new ArrayAdapter(this, Android.Resource.Layout.SimpleListItemActivated1, websites);
+            ArrayAdapter filterListAdapter = new ArrayAdapter(this, Android.Resource.Layout.SimpleListItemActivated1, websites);
             filterListView.Adapter = filterListAdapter;
             filterListView.ItemClick += FilterListView_ItemClick;
             filterListView.ItemClick += (s, e) => drawerLayout.CloseDrawer(Android.Support.V4.View.GravityCompat.Start);
@@ -167,7 +162,7 @@ namespace ListWithJson
 
         private User AuthenticateUser()
         {
-            if (AppPreferenceUser.isLogged)
+            if (AppPreferenceUser.IsLogged)
             {
                  return AppPreferenceUser.GetUser(); 
             }
@@ -217,7 +212,7 @@ namespace ListWithJson
             }
         }
 
-        private async void OnAddButtonClickedHandler(object sender, AddButtonEventArgs e)
+        private async void OnAddButtonClickedHandler(object sender, AddDialogEventArgs e)
         {
             string url = e.Text;
             var product = await _restService.Put(url);
@@ -259,7 +254,7 @@ namespace ListWithJson
             await RefreshProductListPage();
         }
 
-        public async Task RefreshProductListPage()
+        private async Task RefreshProductListPage()
         {
             List<Product> productsNew = await _restService.Get();
             productAdapter.SetProducts(productsNew);

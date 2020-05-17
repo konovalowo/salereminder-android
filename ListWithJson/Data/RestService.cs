@@ -1,4 +1,6 @@
-﻿using System;
+﻿#define DEBUG
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Http;
@@ -10,6 +12,7 @@ using Javax.Net.Ssl;
 using ListWithJson.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+
 
 namespace ListWithJson
 {
@@ -32,7 +35,11 @@ namespace ListWithJson
 
         public RestService()
         {
+#if DEBUG
             _client = new HttpClient(GetInsecureHandler());
+#else
+            _client = new HttpClient();
+#endif
             Debug.AutoFlush = true;
         }
 
@@ -106,7 +113,7 @@ namespace ListWithJson
                     var uri = new Uri(Constants.ApiFirebaseTokenRegistration);
                     var content = new StringContent(JsonConvert.SerializeObject(token), Encoding.UTF8, "application/json");
 
-                    var response = await _client.PostAsync(uri, content);
+                    var response = await _client.PutAsync(uri, content);
 
                     if (response.IsSuccessStatusCode)
                     {

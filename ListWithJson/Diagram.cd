@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ListWithJson.AddDialogFragment">
+    <Position X="8" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAgAAAAAAQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Activities\AddDialogFragment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ListWithJson.Activities.CreateAccountActivity">
+    <Position X="4" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAACAAAAAAAAAAACBAAAACAAAAgAAAQAAgAAQAA=</HashCode>
+      <FileName>Activities\CreateAccountActivity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ListWithJson.MainActivity">
+    <Position X="0.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QBAACAAAACAAAAAAIAgAAAAEgCAAgAAAAIQAEAACAYA=</HashCode>
+      <FileName>Activities\MainActivity.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_restService" />
+      <Field Name="productAdapter" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="ListWithJson.ProductPageActivity">
+    <Position X="5.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAgAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Activities\ProductPageActivity.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="product" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="ListWithJson.Activities.SignInActivity">
+    <Position X="2.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAAACAAAAACAAAAgAAAAMAAAAAAA=</HashCode>
+      <FileName>Activities\SignInActivity.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_restServiceSignIn" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="ListWithJson.RestService">
+    <Position X="0.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABABAAEAAAAAIGBAAAAAAAIAAAEAAIAAAAAAAAAAAAg=</HashCode>
+      <FileName>Data\RestService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_user" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="ListWithJson.FirebaseMessaging.FirebaseIIDService">
+    <Position X="0.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>FirebaseMessaging\FirebaseIIDService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ListWithJson.AddDialogEventArgs">
+    <Position X="9.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Models\AddDialogEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ListWithJson.Constants">
+    <Position X="11.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAIAAAAEAAAIAAAAABAAAAAAAAA=</HashCode>
+      <FileName>Models\Constants.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ListWithJson.Product">
+    <Position X="8" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAABAAQAgAAAAAAAAAAQACYAAABAACAAAAAABCAA=</HashCode>
+      <FileName>Models\Product.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ListWithJson.Models.User">
+    <Position X="9.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAACAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Models\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ListWithJson.ItemEventArgs">
+    <Position X="6" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RecyclerView\ItemEventArgs.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Product" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="ListWithJson.ProductAdapter">
+    <Position X="2.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEQEAAABgAEEAAAIAgCAAAAAAAABAAABAAAAAA=</HashCode>
+      <FileName>RecyclerView\ProductAdapter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ListWithJson.ProductViewHolder">
+    <Position X="4.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAgAAQAAAAABAAAAAAAAAIAAA=</HashCode>
+      <FileName>RecyclerView\ProductViewHolder.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ListWithJson.Utils.AppPreferenceUser">
+    <Position X="11.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIEAAAAAEAAAAAAAAAAAAAAAAAAAAAAAEAABAAAAAAA=</HashCode>
+      <FileName>Utils\AppPreferenceUser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ListWithJson.ImageViewExtension">
+    <Position X="11.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>Utils\ImageViewExtension.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

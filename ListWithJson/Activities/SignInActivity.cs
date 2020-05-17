@@ -19,7 +19,9 @@ namespace ListWithJson.Activities
     {
         EditText editTextEmail;
         EditText editTextPassword;
-        RestService _restServiceSignIn;
+        RestService _restService;
+
+        Button buttonSignIn;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -27,9 +29,9 @@ namespace ListWithJson.Activities
 
             SetContentView(Resource.Layout.activity_signin);
 
-            _restServiceSignIn = new RestService();
+            _restService = new RestService();
 
-            var buttonSignIn = FindViewById<Button>(Resource.Id.buttonSignIn);
+            buttonSignIn = FindViewById<Button>(Resource.Id.buttonSignIn);
             var buttonToCreateAccount = FindViewById<Button>(Resource.Id.buttonToCreateAccount);
             editTextEmail = FindViewById<EditText>(Resource.Id.editTextEmailSignIn);
             editTextPassword = FindViewById<EditText>(Resource.Id.editTextPasswordSignIn);
@@ -47,7 +49,8 @@ namespace ListWithJson.Activities
             string email = editTextEmail.Text;
             string password = editTextPassword.Text;
 
-            User user = await _restServiceSignIn.Authenticate(new User { Email = email, Password = password }, false);
+            buttonSignIn.Enabled = false;
+            User user = await _restService.Authenticate(new User { Email = email, Password = password }, false);
 
             if (user != null)
             {
@@ -59,6 +62,7 @@ namespace ListWithJson.Activities
             }
             else
             {
+                buttonSignIn.Enabled = true;
                 Toast.MakeText(this, Resource.String.incorrect_pass_or_email, ToastLength.Long).Show();
             }
         }
