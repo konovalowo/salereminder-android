@@ -1,5 +1,8 @@
 ﻿#define DEBUG
 
+using Android.Util;
+using ListWithJson.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -7,11 +10,6 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using Android.Util;
-using Javax.Net.Ssl;
-using ListWithJson.Models;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 
 namespace ListWithJson

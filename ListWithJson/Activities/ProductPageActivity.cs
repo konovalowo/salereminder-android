@@ -1,21 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Globalization;
-using System.Diagnostics;
-
-using Xamarin.Android;
-using Xamarin.Essentials;
-using Android.App;
+﻿using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
+using Android.Util;
 using Android.Views;
 using Android.Widget;
-
 using Newtonsoft.Json;
-using Android.Util;
+using System;
+using Xamarin.Essentials;
 
 namespace ListWithJson
 {
@@ -34,7 +25,7 @@ namespace ListWithJson
             // toolbar
             var toolbar = FindViewById<Android.Widget.Toolbar>(Resource.Id.toolbar);
             SetActionBar(toolbar);
-            ActionBar.Title = Resources.GetString(Resource.String.app_name);
+            ActionBar.Title = "";
             ActionBar.SetHomeButtonEnabled(true);
             ActionBar.SetDisplayHomeAsUpEnabled(true);
 

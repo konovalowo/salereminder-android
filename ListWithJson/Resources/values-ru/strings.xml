@@ -19,4 +19,5 @@
   <string name="add_product_button">Добавить</string>
   <string name="add_product_hint">Введите ссылку</string>
   <string name="all_products">Все</string>
+  <string name="server_unavailable">Server unavailable</string>
 </resources>

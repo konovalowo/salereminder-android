@@ -4727,10 +4727,13 @@ namespace ListWithJson
 			public const int search_menu_title = 2131624031;
 			
 			// aapt resource value: 0x7F0E0060
-			public const int sign_in = 2131624032;
+			public const int server_unavailable = 2131624032;
 			
 			// aapt resource value: 0x7F0E0061
-			public const int status_bar_notification_info_overflow = 2131624033;
+			public const int sign_in = 2131624033;
+			
+			// aapt resource value: 0x7F0E0062
+			public const int status_bar_notification_info_overflow = 2131624034;
 			
 			static String()
 			{

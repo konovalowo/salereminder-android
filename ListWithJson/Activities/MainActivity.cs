@@ -1,28 +1,23 @@
 ﻿using Android.App;
-using Android.OS;
-using Android.Support.V7.App;
-using Android.Runtime;
-using Android.Widget;
 using Android.Content;
-using Android.Support.V7.Widget;
-using Newtonsoft.Json;
+using Android.Gms.Common;
+using Android.OS;
+using Android.Runtime;
 using Android.Support.Design.Widget;
+using Android.Support.V4.Widget;
+using Android.Support.V7.App;
+using Android.Support.V7.Widget;
+using Android.Util;
 using Android.Views;
-
-using System.IO;
-using System.Reflection;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading.Tasks;
-
+using Android.Widget;
 using ListWithJson.Activities;
 using ListWithJson.Models;
 using ListWithJson.Utils;
+using Newtonsoft.Json;
 using System;
-using Android.Util;
-using Android.Gms.Common;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xamarin.Essentials;
-using Android.Support.V4.Widget;
 
 namespace ListWithJson
 {

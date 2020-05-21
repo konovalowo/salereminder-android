@@ -1,18 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using Android.App;
-using Android.Content;
-using Android.Graphics;
-using Android.OS;
-using Android.Runtime;
+﻿using Android.Graphics;
 using Android.Util;
-using Android.Views;
 using Android.Widget;
+using System;
+using System.Net.Http;
 
 namespace ListWithJson
 {

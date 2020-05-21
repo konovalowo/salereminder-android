@@ -18,4 +18,5 @@
   <string name="add_product_button">Add</string>
   <string name="add_product_hint">Enter product url</string>
   <string name="all_products">All</string>
+  <string name="server_unavailable">Server unavailable</string>
 </resources>
